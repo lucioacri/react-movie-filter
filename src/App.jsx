@@ -25,26 +25,32 @@ function App() {
   const [filteredFilms, setFilteredFilms] = useState(filmsArray);
 
   useEffect(() => {
-    if (selectGenreFilter === "") {
-      setFilteredFilms(filmsArray);
-    } else {
-      const newFilteredFilms = filmsArray.filter(
+    let filteredFilmsArray = [...filmsArray];
+    if (selectGenreFilter !== "") {
+      filteredFilmsArray = filteredFilmsArray.filter(
         (film) => film.genre === selectGenreFilter
       );
-      setFilteredFilms(newFilteredFilms);
     }
-  }, [selectGenreFilter]);
 
-  useEffect(() => {
-    if (selectTitleFilter === "") {
-      setFilteredFilms(filmsArray);
-    } else {
-      const newFilteredFilms = filmsArray.filter(
+    if (selectTitleFilter !== "") {
+      filteredFilmsArray = filteredFilmsArray.filter(
         (film) => film.title === selectTitleFilter
       );
-      setFilteredFilms(newFilteredFilms);
     }
-  }, [selectTitleFilter]);
+
+    setFilteredFilms(filteredFilmsArray);
+  }, [selectGenreFilter, selectTitleFilter]);
+
+  // useEffect(() => {
+  //   if (selectTitleFilter === "") {
+  //     setFilteredFilms(filmsArray);
+  //   } else {
+  //     const newFilteredFilms = filmsArray.filter(
+  //       (film) => film.title === selectTitleFilter
+  //     );
+  //     setFilteredFilms(newFilteredFilms);
+  //   }
+  // }, [selectTitleFilter]);
 
   return (
     <main>
