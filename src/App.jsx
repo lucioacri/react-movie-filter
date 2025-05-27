@@ -10,6 +10,13 @@ function App() {
     { title: "Pulp Fiction", genre: "Thriller" },
   ];
 
+  const genres = [];
+  filmsArray.forEach((film) => {
+    if (!genres.includes(film.genre)) {
+      genres.push(film.genre);
+    }
+  });
+
   const [selectFilter, setSelectFilter] = useState("");
   const [filteredFilms, setFilteredFilms] = useState(filmsArray);
 
@@ -35,8 +42,8 @@ function App() {
               onChange={(e) => setSelectFilter(e.target.value)}
             >
               <option value=""></option>
-              {filmsArray.map((film, index) => (
-                <option key={index}>{film.genre}</option>
+              {genres.map((genre, index) => (
+                <option key={index}>{genre}</option>
               ))}
             </select>
           </div>
