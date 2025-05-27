@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const filmsArray = [
@@ -10,12 +10,40 @@ function App() {
     { title: "Pulp Fiction", genre: "Thriller" },
   ];
 
+  const [selectFilter, setSelectFilter] = useState("");
+  const [filteredFilms, setFilteredFilms] = useState(filmsArray);
+
+  useEffect(() => {
+    if (selectFilter === "") {
+      setFilteredFilms(filmsArray);
+    } else {
+      const newFilteredFilms = filmsArray.filter(
+        (film) => film.genre === selectFilter
+      );
+      setFilteredFilms(newFilteredFilms);
+    }
+  }, [selectFilter]);
+
   return (
     <main>
       <div className="container">
+        <div className="row">
+          <div className="col">
+            <select
+              className="form-select"
+              value={selectFilter}
+              onChange={(e) => setSelectFilter(e.target.value)}
+            >
+              <option value=""></option>
+              {filmsArray.map((film, index) => (
+                <option key={index}>{film.genre}</option>
+              ))}
+            </select>
+          </div>
+        </div>
         <div className="row g-3">
-          {filmsArray.map((film) => (
-            <div className="col">
+          {filteredFilms.map((film, index) => (
+            <div className="col-4" key={index}>
               <div className="card">
                 <div className="card-title">{film.title}</div>
                 <div className="card-content">{film.genre}</div>
