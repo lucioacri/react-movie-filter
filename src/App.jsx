@@ -17,19 +17,34 @@ function App() {
     }
   });
 
-  const [selectFilter, setSelectFilter] = useState("");
+  const titles = [];
+  filmsArray.forEach((film) => titles.push(film.title));
+
+  const [selectGenreFilter, setSelectGenreFilter] = useState("");
+  const [selectTitleFilter, setSelectTitleFilter] = useState("");
   const [filteredFilms, setFilteredFilms] = useState(filmsArray);
 
   useEffect(() => {
-    if (selectFilter === "") {
+    if (selectGenreFilter === "") {
       setFilteredFilms(filmsArray);
     } else {
       const newFilteredFilms = filmsArray.filter(
-        (film) => film.genre === selectFilter
+        (film) => film.genre === selectGenreFilter
       );
       setFilteredFilms(newFilteredFilms);
     }
-  }, [selectFilter]);
+  }, [selectGenreFilter]);
+
+  useEffect(() => {
+    if (selectTitleFilter === "") {
+      setFilteredFilms(filmsArray);
+    } else {
+      const newFilteredFilms = filmsArray.filter(
+        (film) => film.title === selectTitleFilter
+      );
+      setFilteredFilms(newFilteredFilms);
+    }
+  }, [selectTitleFilter]);
 
   return (
     <main>
@@ -38,12 +53,24 @@ function App() {
           <div className="col">
             <select
               className="form-select"
-              value={selectFilter}
-              onChange={(e) => setSelectFilter(e.target.value)}
+              value={selectGenreFilter}
+              onChange={(e) => setSelectGenreFilter(e.target.value)}
             >
               <option value=""></option>
               {genres.map((genre, index) => (
                 <option key={index}>{genre}</option>
+              ))}
+            </select>
+          </div>
+          <div className="col">
+            <select
+              className="form-select"
+              value={selectTitleFilter}
+              onChange={(e) => setSelectTitleFilter(e.target.value)}
+            >
+              <option value=""></option>
+              {titles.map((title, index) => (
+                <option key={index}>{title}</option>
               ))}
             </select>
           </div>
